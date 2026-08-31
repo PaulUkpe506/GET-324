@@ -14,7 +14,7 @@ def load_files():
     with open("class_indices.json", "r") as f:
       indices = json.load(f)
     return {int(v): k for k, v in indices.items()}
-  except FileNotFoundError:
+  except Exception:
     return {
         0: "Apple___Healthy",
         1: "Apple___Black_rot",
@@ -29,7 +29,7 @@ uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "png", "jpeg
 
 if uploaded_file is not None:
   image = Image.open(uploaded_file)
-  st.image(image, caption="Uploaded Image", use_column_width=True)
+  st.image(image, caption="Uploaded Image", use_container_width=True)
 
   if st.button("Predict"):
     class_id = 0
@@ -38,5 +38,3 @@ if uploaded_file is not None:
     predicted_label = labels.get(class_id, "Healthy")
     st.success(f"Result: {predicted_label}")
     st.info(f"Confidence: {confidence:.2f}%")
-
-
